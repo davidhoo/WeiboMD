@@ -48,7 +48,7 @@
     let matchCount = 0;
     for (const pattern of MD_PATTERNS) {
       if (pattern.test(text)) matchCount++;
-      if (matchCount >= 1) return true;
+      if (matchCount >= 2) return true;
     }
     return false;
   }
