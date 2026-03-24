@@ -94,7 +94,10 @@
     if (expandBtn && /^展开$/.test(expandBtn.textContent.trim())) return;
 
     const rawText = cleanWeiboText(el);
-    if (!rawText.trim() || !looksLikeMarkdown(rawText)) return;
+    // Strip topic links (converted from #topic# to [#topic#](url)) before detection,
+    // so posts with only topic hashtags and plain text won't trigger markdown rendering
+    const textForDetection = rawText.replace(/\[#.+?#\]\([^)]+\)/g, "");
+    if (!rawText.trim() || !looksLikeMarkdown(textForDetection)) return;
 
     // Save original HTML for revert
     el.setAttribute(ORIGINAL_ATTR, el.innerHTML);
